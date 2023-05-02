@@ -31,12 +31,14 @@ class CubePageView extends StatefulWidget {
   /// Widgets you want to use inside the [CubePageView], this is only required if you use [CubePageView] constructor
   final List<Widget> children;
 
+  final int initalValue;
   /// Creates a scrollable list that works page by page from an explicit [List]
   /// of widgets.
   const CubePageView({
     Key key,
     this.onPageChanged,
     this.controller,
+    this.initalValue=0
     @required this.children,
   })  : itemBuilder = null,
         itemCount = null,
@@ -60,6 +62,7 @@ class CubePageView extends StatefulWidget {
     @required this.itemBuilder,
     this.onPageChanged,
     this.controller,
+    this.initalValue=0,
   })  : this.children = null,
         assert(itemCount != null),
         assert(itemBuilder != null),
@@ -80,6 +83,8 @@ class _CubePageViewState extends State<CubePageView> {
   @override
   void initState() {
     _pageController = widget.controller ?? PageController();
+    _pageNotifier.value = widget.initalValue??0;
+  
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageController.addListener(_listener);
     });
